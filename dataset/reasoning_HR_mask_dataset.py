@@ -137,16 +137,3 @@ def merge_data(data):
             "batch_content_len":torch.LongTensor(content_len)}
 
 
-if __name__ == '__main__':
-    triples = []
-    with open(os.path.join("/home/songran/prix-lm/prix-lm/data/split_data1/", 'train.txt'), 'r', encoding="utf8") as fh:
-        for line in fh.readlines()[:100]:
-            e1, r, e2, lan = line.strip().split('\t')
-            if lan == "en":
-                triples.append((e1, r, e2, lan))
-    tokenizer = AutoTokenizer.from_pretrained("/home/songran/prix-lm/prix-lm/pretrained_model")
-    triple_dataset = ReasoningHRDataset(triples, tokenizer, 35)
-    load = DataLoader(triple_dataset, batch_size=5, collate_fn=merge_data)
-    for j in load:
-        print(j)
-
